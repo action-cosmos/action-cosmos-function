@@ -19,8 +19,8 @@ resource hosting_plan 'Microsoft.Web/serverfarms@2020-06-01' = {
   name: 'asp-${app_name}'
   location: location
   sku: {
-    name: 'Y1'
-    tier: 'Dynamic'
+    name: 'F1'
+    tier: 'Free'
   }
 }
 
