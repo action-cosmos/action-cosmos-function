@@ -1,8 +1,8 @@
-var location = resourceGroup().location
+var location = 'westus3'
 param app_name string
 
 resource storage_account 'Microsoft.Storage/storageAccounts@2020-08-01-preview' = {
-name: 'sa0${app_name}'
+name: 'sa0${app_name}${location}'
   location: location
   properties: {
     supportsHttpsTrafficOnly: true
@@ -16,8 +16,9 @@ name: 'sa0${app_name}'
 }
 
 resource hosting_plan 'Microsoft.Web/serverfarms@2020-06-01' = {
-  name: 'asp-${app_name}'
+  name: 'asp-${app_name}-${location}'
   location: location
+  kind: 'linux'
   sku: {
     name: 'F1'
     tier: 'Free'
@@ -25,14 +26,17 @@ resource hosting_plan 'Microsoft.Web/serverfarms@2020-06-01' = {
 }
 
 resource function_app 'Microsoft.Web/sites@2020-06-01' = {
-  name: 'functionapp-${app_name}'
+  name: 'functionapp-${app_name}-${location}'
   location: location
-  kind: 'functionapp'
+  kind: 'linux'
   properties: {
+    enabled: true
     httpsOnly: true
     serverFarmId: hosting_plan.id
     clientAffinityEnabled: true
     siteConfig: {
+      minTlsVersion: '1.2'
+      scmMinTlsVersion: '1.2'
       appSettings: [
         {
           'name': 'FUNCTIONS_EXTENSION_VERSION'
