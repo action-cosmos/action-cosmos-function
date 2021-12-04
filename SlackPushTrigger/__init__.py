@@ -12,7 +12,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if not user_token:
         return func.HttpResponse("필수 값이 없습니다", status_code=400)
 
-    slack_webhook_url = "https://hooks.slack.com/services/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"
+    slack_webhook_url = ""
+    # TODO: DB에서 user_token에 맞는 slack_webhook_url을 가져온다
+
     message_data = {
         "text": message
     }
