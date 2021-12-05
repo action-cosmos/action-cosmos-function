@@ -1,4 +1,4 @@
-from client.redis_client import redis_client
+from .redis_client import redis_client
 import json
 import logging
 import requests
