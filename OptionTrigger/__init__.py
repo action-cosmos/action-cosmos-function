@@ -16,7 +16,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if (message_type is None) or (user_token is None):
         return func.HttpResponse(status_code=400)
 
-    validate_message_params(message_type, request_body)
+    validate_message_params(user_token, message_type, request_body)
     set_message_params(user_token, message_type, request_body)
 
     return func.HttpResponse(
