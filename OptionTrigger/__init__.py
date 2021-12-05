@@ -26,7 +26,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
 def validate_message_params(user_token, message_type, data):
     if message_type == 'slack':
-        slack_webhook_url = data['webhook_url']
+        slack_webhook_url = data['slack_webhook_url']
         if slack_webhook_url is None:
             raise ValidateError
         redis_client.set(MESSAGE_TYPE_KEY.format(user_token), slack_webhook_url)
@@ -43,7 +43,7 @@ def validate_message_params(user_token, message_type, data):
 
 def set_message_params(user_token, message_type, data):
     if message_type == 'slack':
-        slack_webhook_url = data['webhook_url']
+        slack_webhook_url = data['slack_webhook_url']
 
         redis_client.set(MESSAGE_TYPE_KEY.format(user_token), 'slack')
         redis_client.set(SLACK_WEBHOOK_URL_KEY.format(user_token), slack_webhook_url) 
